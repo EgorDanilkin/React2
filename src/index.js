@@ -3,11 +3,39 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux';
+import {Provider} from "react-redux";
+
+const initialState = {
+  count: 0,
+};
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increase':
+    return {
+      ...state,
+      count: state.count + 1,
+    }
+    case 'decrease':
+      return {
+        ...state,
+        count: state.count - 1,
+      }
+    default: {
+      return state
+    }
+  }
+};
+
+export const store = createStore(reducer)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
